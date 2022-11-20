@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="771px" preserveAspectRatio="none" style="width:1657px;height:771px;background:#FFFFFF;" version="1.1" viewBox="0 0 1657 771" width="1657px" zoomAndPan="magnify"><defs/><g><rect fill="none" height="42.9766" id="_title" style="stroke:none;stroke-width:1.0;" width="506" x="568.9888" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="496" x="573.9888" y="23.5352">Terraform Module to Provision a Child GCP Project managed with CI</text><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="202" x="720.9888" y="40.0234">C4/L2 Architecture Diagram</text><!--MD5=[0bb39c58ea83fc9c9bba3862680c1001]
+cluster gcp_root--><g id="cluster_gcp_root"><rect fill="none" height="446" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;stroke-dasharray:7.0,7.0;" width="577" x="13.9775" y="178.0166"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="136" x="234.4775" y="195.4853">Root GCP Project</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="53" x="275.9775" y="210.4619">[System]</text></g><!--MD5=[44f6e693271e438e868b60ec3f2a6782]
+cluster gcp_child--><g id="cluster_gcp_child"><rect fill="none" height="537.5" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;stroke-dasharray:7.0,7.0;" width="910" x="741.9775" y="110.5166"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="142" x="1125.9775" y="127.9853">Child GCP Project</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="53" x="1170.4775" y="142.9619">[System]</text></g><!--MD5=[96e735387b4ab3e1ff8e606246b4e414]
+cluster provisioned_by_root_sa--><g id="cluster_provisioned_by_root_sa"><rect fill="none" height="438.5" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;stroke-dasharray:7.0,7.0;" width="587" x="781.9775" y="177.5166"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="189" x="980.9775" y="194.9853">Provisioned by Root SA</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="53" x="1048.9775" y="209.9619">[System]</text></g><!--MD5=[cd610fcd036e2672aba5dbe4e1bad612]
+cluster child_resource--><g id="cluster_child_resource"><rect fill="none" height="155" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;stroke-dasharray:7.0,7.0;" width="211" x="1400.9775" y="445.5166"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="195" x="1408.9775" y="462.9853">Provisioned by Child SA</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="53" x="1479.9775" y="477.9619">[System]</text></g><!--MD5=[699a2ad42a90ebcd5957d60b312d23ae]
+entity sa_root--><g id="elem_sa_root"><rect fill="#438DD5" height="102.4414" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="191" x="375.4775" y="237.0166"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="109" x="416.4775" y="262.4853">Terraform SA</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="122" x="409.9775" y="277.4619">[IAM Service Account]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="468.9775" y="293.5283"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="167" x="385.4775" y="310.0166">SA to provision and own</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85" x="428.4775" y="326.5048">child project</text></g><!--MD5=[be122ffd46d3d378e17f3e93dbb0f199]
+entity gs_root--><g id="elem_gs_root"><rect fill="#438DD5" height="102.4414" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="177" x="57.4775" y="237.0166"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="157" x="67.4775" y="262.4853">Terraform Backend</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="137" x="77.4775" y="277.4619">[Google Storage Bucket]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="143.9775" y="293.5283"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150" x="68.9775" y="310.0166">TF state with the child</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55" x="118.4775" y="326.5048">projects</text></g><!--MD5=[53473033f250f662477526a8cddbae3a]
+entity id_pool_root--><g id="elem_id_pool_root"><rect fill="#438DD5" height="118.9297" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="218" x="348.9775" y="481.0166"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="111" x="402.4775" y="506.4853">AuthN/Z Pool</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="189" x="363.4775" y="521.4619">[IAM Workload ID Pool+Provider]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="455.9775" y="537.5283"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="194" x="358.9775" y="554.0166">Identity Pool and Provider to</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="185" x="363.4775" y="570.5048">authenticate and authorize</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="77" x="419.4775" y="586.9931">the root SA</text></g><!--MD5=[1d25185e32297b35b5681ced648faddb]
+entity sa_child--><g id="elem_sa_child"><rect fill="#B3B3B3" height="118.9297" rx="2.5" ry="2.5" style="stroke:#A6A6A6;stroke-width:0.5;" width="200" x="1152.9775" y="228.5166"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="109" x="1198.4775" y="253.9853">Terraform SA</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="122" x="1191.9775" y="268.9619">[IAM Service Account]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1250.9775" y="285.0283"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="167" x="1167.4775" y="301.5166">SA to provision and own</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="176" x="1162.9775" y="318.0048">resources within the child</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48" x="1228.9775" y="334.4931">project</text></g><!--MD5=[0a0433936a79c7e0aa4b8bf7299e2f64]
+entity gs_child--><g id="elem_gs_child"><rect fill="#B3B3B3" height="118.9297" rx="2.5" ry="2.5" style="stroke:#A6A6A6;stroke-width:0.5;" width="214" x="797.9775" y="228.5166"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="157" x="826.4775" y="253.9853">Terraform Backend</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="137" x="836.4775" y="268.9619">[Google Storage Bucket]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="902.9775" y="285.0283"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="166" x="819.9775" y="301.5166">TF state with resoureces</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="190" x="807.9775" y="318.0048">provisioned within the child</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48" x="880.9775" y="334.4931">project</text></g><!--MD5=[8d8602a6fb5a9685bb5c41d55bf3a7ad]
+entity id_pool_child--><g id="elem_id_pool_child"><rect fill="#B3B3B3" height="118.9297" rx="2.5" ry="2.5" style="stroke:#A6A6A6;stroke-width:0.5;" width="218" x="1134.9775" y="481.0166"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="111" x="1188.4775" y="506.4853">AuthN/Z Pool</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="189" x="1149.4775" y="521.4619">[IAM Workload ID Pool+Provider]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1241.9775" y="537.5283"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="194" x="1144.9775" y="554.0166">Identity Pool and Provider to</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="185" x="1149.4775" y="570.5048">authenticate and authorize</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="81" x="1203.4775" y="586.9931">the child SA</text></g><!--MD5=[12be0fc11b2ae6421f2f669b57d045aa]
+entity sa_root_child--><g id="elem_sa_root_child"><rect fill="#438DD5" height="85.9531" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="186" x="913.9775" y="497.5166"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="166" x="923.9775" y="522.9853">Terraform SA - Root</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="122" x="945.9775" y="537.9619">[IAM Service Account]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1004.9775" y="554.0283"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="143" x="935.4775" y="570.5166">Transitive ownership</text></g><!--MD5=[f82f316d06854feb366f7ed42a1f6615]
+entity child_resources--><g id="elem_child_resources"><rect fill="#B3B3B3" height="71.8203" rx="2.5" ry="2.5" style="stroke:#A6A6A6;stroke-width:0.5;" width="142" x="1444.9775" y="504.5166"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="117" x="1454.9775" y="529.9853">Child Project's</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="84" x="1473.9775" y="548.8291">Resources</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="95" x="1468.4775" y="563.8056">[GCP Resources]</text></g><!--MD5=[fefe626508fb72c6e3a94364fc29af58]
+link sa_root to id_pool_root--><!--MD5=[3ced7f4a08dca7df47c6c5d6f62fa4ff]
+link gcp_root to gcp_child--><!--MD5=[5f81018efb2d6230d5a33ab87926f8bd]
+link sa_child to id_pool_child--><!--MD5=[dee377ed45e90c7e78c503bee83c3948]
+link sa_child to sa_root_child--><!--MD5=[bf4fc492fee2dfc8c437996215c3ec5a]
+link sa_root_child to id_pool_child--><!--MD5=[338e2b7f52902b117dc2fdafa9be0a07]
+reverse link gcp_child to sa_root--><g id="link_gcp_child_sa_root"><path d="M741.7198,288.0166 C741.6035,288.0166 741.486,288.0166 741.3674,288.0166 C741.1302,288.0166 740.8885,288.0166 740.6424,288.0166 C740.1501,288.0166 739.64,288.0166 739.1126,288.0166 C738.0578,288.0166 736.9336,288.0166 735.7433,288.0166 C733.3626,288.0166 730.7174,288.0166 727.8341,288.0166 C716.3006,288.0166 700.9563,288.0166 683.485,288.0166 C648.5425,288.0166 605.0925,288.0166 566.6075,288.0166 " fill="none" id="gcp_child-backto-sa_root" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="741.7198,288.0166,733.7198,285.0166,733.7198,291.0166,741.7198,288.0166" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="147" x="584.5475" y="267.6181">provisions child project</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="61" x="627.5475" y="281.7509">[http/json]</text></g><!--MD5=[573d856610dc972ea054c5ee8662583c]
+reverse link gs_root to sa_root--><g id="link_gs_root_sa_root"><path d="M244.0875,288.0166 C285.6275,288.0166 333.8675,288.0166 375.1575,288.0166 " fill="none" id="gs_root-backto-sa_root" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="236.2975,288.0166,244.2975,291.0166,244.2975,285.0166,236.2975,288.0166" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="104" x="252.9775" y="267.6181">uploads *.tfstate</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="67" x="271.4775" y="281.7509">[https/json]</text></g><!--MD5=[9c6bff48eabaa853076a63669ac27f83]
+reverse link gs_child to sa_child--><g id="link_gs_child_sa_child"><path d="M1021.4975,288.0166 C1063.9875,288.0166 1111.6375,288.0166 1152.6175,288.0166 " fill="none" id="gs_child-backto-sa_child" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="1013.7375,288.0166,1021.7375,291.0166,1021.7375,285.0166,1013.7375,288.0166" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="104" x="1030.4775" y="267.6181">uploads *.tfstate</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="67" x="1048.9775" y="281.7509">[https/json]</text></g><!--MD5=[7ea12d27e4d49389fe087b7c056a1b12]
+link sa_child to child_resource--><g id="link_sa_child_child_resource"><path d="M1309.2375,347.9066 C1330.0175,371.8666 1352.4875,400.6866 1368.9775,429.5166 C1381.6875,451.7416 1391.575,478.7366 1398.34,500.4216 C1399.1856,503.1322 1399.9825,505.7598 1400.7299,508.2848 C1400.7766,508.4427 1400.8232,508.6001 1400.8695,508.7571 " fill="none" id="sa_child-to-child_resource" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="1400.8695,508.7571,1401.4827,500.2351,1395.728,501.9332,1400.8695,508.7571" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="100" x="1367.9775" y="390.1181">provisions child</text><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="110" x="1364.9775" y="404.2509">project's resource</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="61" x="1389.4775" y="418.3837">[http/json]</text></g><rect fill="none" height="81.9531" id="_legend" rx="7.5" ry="7.5" style="stroke:none;stroke-width:1.0;" width="198" x="1437.9775" y="661.0166"/><rect height="16.4883" style="stroke:none;stroke-width:1.0;fill:none;" width="186" x="1443.9775" y="669.0166"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="51" x="1443.9775" y="682.5517">Legend</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1494.9775" y="682.5517"> </text><rect fill="#438DD5" height="16.4883" style="stroke:none;stroke-width:1.0;" width="186" x="1443.9775" y="685.5048"/><text fill="#3C7FC0" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8" x="1447.9775" y="699.04">▯</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1455.9775" y="699.04"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="65" x="1463.9775" y="699.04">container</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1532.9775" y="699.04"> </text><rect fill="#B3B3B3" height="16.4883" style="stroke:none;stroke-width:1.0;" width="186" x="1443.9775" y="701.9931"/><text fill="#A6A6A6" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8" x="1447.9775" y="715.5283">▯</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1455.9775" y="715.5283"> </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129" x="1463.9775" y="715.5283">external_container</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1596.9775" y="715.5283"> </text><rect height="16.4883" style="stroke:none;stroke-width:1.0;fill:none;" width="186" x="1443.9775" y="718.4814"/><text fill="#444444" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8" x="1447.9775" y="732.0166">▯</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1455.9775" y="732.0166"> </text><text fill="#444444" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="117" x="1463.9775" y="732.0166">system boundary</text><text fill="#444444" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="41" x="1584.9775" y="732.8603">(dashed)</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="1625.9775" y="732.0166"> </text><line style="stroke:#00000000;stroke-width:1.0;" x1="1443.9775" x2="1629.9775" y1="669.0166" y2="669.0166"/><line style="stroke:#00000000;stroke-width:1.0;" x1="1443.9775" x2="1629.9775" y1="685.5048" y2="685.5048"/><line style="stroke:#00000000;stroke-width:1.0;" x1="1443.9775" x2="1629.9775" y1="701.9931" y2="701.9931"/><line style="stroke:#00000000;stroke-width:1.0;" x1="1443.9775" x2="1629.9775" y1="718.4814" y2="718.4814"/><line style="stroke:#00000000;stroke-width:1.0;" x1="1443.9775" x2="1629.9775" y1="734.9697" y2="734.9697"/><line style="stroke:#00000000;stroke-width:1.0;" x1="1443.9775" x2="1443.9775" y1="669.0166" y2="734.9697"/><line style="stroke:#00000000;stroke-width:1.0;" x1="1629.9775" x2="1629.9775" y1="669.0166" y2="734.9697"/><rect fill="none" height="11.7773" style="stroke:none;stroke-width:1.0;" width="177" x="733.4888" y="751.9697"/><text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="177" x="733.4888" y="761.6377">Dmitry Kisler &lt;admin@dkisler.com&gt;</text><!--MD5=[fd782580001277eb8731c63d595930cc]
+@startuml module-diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title "Terraform Module to Provision a Child GCP Project managed with CI\nC4/L2 Architecture Diagram"
+footer "Dmitry Kisler <admin@dkisler.com>"
+
+System_Boundary(gcp_root, "Root GCP Project") {
+    Container(sa_root, "Terraform SA", "IAM Service Account", "SA to provision and own child project")
+    Container(gs_root, "Terraform Backend", "Google Storage Bucket", "TF state with the child projects")
+    Container(id_pool_root, "AuthN/Z Pool", "IAM Workload ID Pool+Provider", "Identity Pool and Provider to authenticate and authorize the root SA")
+}
+
+System_Boundary(gcp_child, "Child GCP Project") {
+    System_Boundary(provisioned_by_root_sa, "Provisioned by Root SA") {
+        Container_Ext(sa_child, "Terraform SA", "IAM Service Account", "SA to provision and own resources within the child project")
+        Container_Ext(gs_child, "Terraform Backend", "Google Storage Bucket", "TF state with resoureces provisioned within the child project")
+        Container_Ext(id_pool_child, "AuthN/Z Pool", "IAM Workload ID Pool+Provider", "Identity Pool and Provider to authenticate and authorize the child SA")
+        Container(sa_root_child, "Terraform SA - Root", "IAM Service Account", "Transitive ownership")
+    }
+
+    System_Boundary(child_resource, "Provisioned by Child SA") {
+        Container_Ext(child_resources, "Child Project's Resources", "GCP Resources")
+    }
+
+}
+
+Lay_U(id_pool_root, sa_root)
+Lay_R(gcp_root, gcp_child)
+
+Lay_D(sa_child, id_pool_child)
+Lay_D(sa_child, sa_root_child)
+Lay_R(sa_root_child, id_pool_child)
+
+Rel_L(sa_root, gcp_child, "provisions child project", "http/json")
+Rel_L(sa_root, gs_root, "uploads *.tfstate", "https/json")
+
+Rel_L(sa_child, gs_child, "uploads *.tfstate", "https/json")
+Rel_D(sa_child, child_resource, "provisions child project's resource", "http/json")
+
+SHOW_LEGEND()
+
+@enduml
+
+@startuml module-diagram
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam defaultTextAlignment center
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 150
+
+skinparam LegendBorderColor transparent
+skinparam LegendBackgroundColor transparent
+skinparam LegendFontColor #FFFFFF
+
+skinparam shadowing<<legendArea>> false
+skinparam rectangle<<legendArea>> {
+    backgroundcolor #00000000
+    bordercolor #00000000
+}
+
+skinparam rectangle {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam database {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam queue {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam arrow {
+    Color #666666
+    FontColor #666666
+    FontSize 12
+}
+
+skinparam actor {
+    StereotypeFontSize 12
+    shadowing false
+    style awesome
+}
+
+skinparam person {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam rectangle<<boundary>> {
+    Shadowing false
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    BorderStyle dashed
+}
+
+skinparam package {
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    FontStyle plain
+    BackgroundColor transparent
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam database<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam queue<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam actor<<boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam person<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam package<<boundary>>StereotypeFontColor transparent
+skinparam rectangle<<boundary>>StereotypeFontColor transparent
+
+skinparam rectangle<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam database<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam queue<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam actor<<enterprise_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam person<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam package<<enterprise_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<enterprise_boundary>>StereotypeFontColor transparent
+
+
+skinparam rectangle<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam database<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam queue<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam actor<<system_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam person<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam package<<system_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<system_boundary>>StereotypeFontColor transparent
+
+
+skinparam rectangle<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam database<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam queue<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam actor<<container_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam person<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam package<<container_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<container_boundary>>StereotypeFontColor transparent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam database<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam queue<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam actor<<person>> {
+    StereotypeFontColor #08427B
+    FontColor #08427B
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam person<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+
+skinparam rectangle<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam database<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_person>> {
+    StereotypeFontColor #686868
+    FontColor #686868
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam person<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+
+skinparam rectangle<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam database<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam queue<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam actor<<system>> {
+    StereotypeFontColor #1168BD
+    FontColor #1168BD
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam person<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+
+skinparam rectangle<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam database<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_system>> {
+    StereotypeFontColor #999999
+    FontColor #999999
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam person<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+
+
+skinparam rectangle<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam database<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam queue<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam actor<<enterprise_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam person<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam package<<enterprise_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<enterprise_boundary>>StereotypeFontColor transparent
+
+
+skinparam rectangle<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam database<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam queue<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam actor<<system_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam person<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam package<<system_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<system_boundary>>StereotypeFontColor transparent
+
+
+
+
+
+
+sprite $person [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+0000000000000000000049BCCA7200000000000000000000
+0000000000000000006EFFFFFFFFB3000000000000000000
+00000000000000001CFFFFFFFFFFFF700000000000000000
+0000000000000001EFFFFFFFFFFFFFF80000000000000000
+000000000000000CFFFFFFFFFFFFFFFF6000000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+00000000000001FFFFFFFFFFFFFFFFFFF900000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFF00000000000000
+0000000000000BFFFFFFFFFFFFFFFFFFFF40000000000000
+0000000000000EFFFFFFFFFFFFFFFFFFFF70000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000DFFFFFFFFFFFFFFFFFFFF60000000000000
+0000000000000AFFFFFFFFFFFFFFFFFFFF40000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFE00000000000000
+00000000000000EFFFFFFFFFFFFFFFFFF800000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+000000000000000BFFFFFFFFFFFFFFFF5000000000000000
+0000000000000001DFFFFFFFFFFFFFF70000000000000000
+00000000000000000BFFFFFFFFFFFF500000000000000000
+0000000000000000005DFFFFFFFFA1000000000000000000
+0000000000000000000037ABB96100000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000025788300000000005886410000000000000
+000000000007DFFFFFFD9643347BFFFFFFFB400000000000
+0000000004EFFFFFFFFFFFFFFFFFFFFFFFFFFB1000000000
+000000007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFD200000000
+00000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE10000000
+0000003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB0000000
+000000BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5000000
+000003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD000000
+000009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF200000
+00000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF600000
+00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA00000
+00000EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF700000
+000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE100000
+0000008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD3000000
+000000014555555555555555555555555555555300000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+sprite $person2 [48x48/16] {
+0000000000000000000049BCCA7200000000000000000000
+0000000000000000006EFFFFFFFFB3000000000000000000
+00000000000000001CFFFFFFFFFFFF700000000000000000
+0000000000000001EFFFFFFFFFFFFFF80000000000000000
+000000000000000CFFFFFFFFFFFFFFFF6000000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+00000000000001FFFFFFFFFFFFFFFFFFF900000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFF00000000000000
+0000000000000BFFFFFFFFFFFFFFFFFFFF40000000000000
+0000000000000EFFFFFFFFFFFFFFFFFFFF70000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000DFFFFFFFFFFFFFFFFFFFF60000000000000
+0000000000000AFFFFFFFFFFFFFFFFFFFF40000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFE00000000000000
+00000000000000EFFFFFFFFFFFFFFFFFF800000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+000000000000000BFFFFFFFFFFFFFFFF5000000000000000
+0000000000000001DFFFFFFFFFFFFFF70000000000000000
+00000000000000000BFFFFFFFFFFFF500000000000000000
+0000000000000000005DFFFFFFFFA1000000000000000000
+0000000000000000000037ABB96100000000000000000000
+000000000002578888300000000005888864100000000000
+0000000007DFFFFFFFFD9643347BFFFFFFFFFB4000000000
+00000004EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB10000000
+0000007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD2000000
+000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE100000
+00003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+0000BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF50000
+0003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD0000
+0009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2000
+000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6000
+000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA000
+000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6000
+0009FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFF2000
+0003FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFD0000
+0000BFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFF50000
+00003FFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFB00000
+000006FFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFE100000
+0000007FFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFD2000000
+00000004EFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFB10000000
+0000000007DF8FFFFFFFFFFFFFFFFFFFFFF8FB4000000000
+000000000002578888888888888888888864100000000000
+}
+
+sprite $robot [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000005BFFFFFFFFFFFFFFFFFFFFFE9100000000000
+0000000000AFFFFFFFFFFFFFFFFFFFFFFFFFE30000000000
+0000000007FFFFFFFFFFFFFFFFFFFFFFFFFFFE1000000000
+000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000000000
+000000004FFFFFFFFFFFFFFFFFFFFFFFFFFFFFC000000000
+000000005FFFFFFFFFFFFFFFFFFFFFFFFFFFFFD000000000
+000000005FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE000000000
+000000005FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE000000000
+000699405FFFFFFC427FFFFFFFFFC427FFFFFFE009982000
+008FFF705FFFFFE10006FFFFFFFE00007FFFFFE00FFFF100
+00CFFF705FFFFFA00001FFFFFFF900002FFFFFE00FFFF500
+00DFFF705FFFFFB00002FFFFFFFA00003FFFFFE00FFFF500
+00DFFF705FFFFFF4000AFFFFFFFF3000BFFFFFE00FFFF500
+00DFFF705FFFFFFFA8DFFFFFFFFFFA8DFFFFFFE00FFFF500
+00DFFF705FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE00FFFF500
+00DFFF705FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE00FFFF500
+00DFFF705FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE00FFFF500
+00DFFF705FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE00FFFF500
+00DFFF705FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE00FFFF500
+00CFFF705FFFFFF87777777777777777CFFFFFE00FFFF500
+008FFF705FFFFFF100000000000000009FFFFFE00FFFF100
+000699405FFFFFF76666666666666666CFFFFFE009982000
+000000005FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE000000000
+000000005FFFFFFFFFFFFFFFFFFFFFFFFFFFFFE000000000
+000000004FFFFFFFFFFFFFFFFFFFFFFFFFFFFFC000000000
+000000000EFFFFFFFFFFFFFFFFFFFFFFFFFFFF7000000000
+0000000005FFFFFFFFFFFFFFFFFFFFFFFFFFFD0000000000
+00000000004CFFFFFFFFFFFFFFFFFFFFFFFF910000000000
+000000000000011111111111111111111110000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+sprite $robot2 [48x48/16] {
+000000000000000088888888888888880000000000000000
+000000000000000AFFFFFFFFFFFFFFFFA000000000000000
+00000000000000CFFFFFFFFFFFFFFFFFFC00000000000000
+00000000000004EFFFFFFFFFFFFFFFFFFE40000000000000
+0000000000000AFFFFFFFFFFFFFFFFFFFFA0000000000000
+00000000000008FFFFFFFFFFFFFFFFFFFF80000000000000
+00000000000008FFFFFFFFFFFFFFFFFFFF80000000000000
+00000000000008FFFFFFFFFFFFFFFFFFFF80000000000000
+00000000000888FFFFFFFFFFFFFFFFFFFF88800000000000
+00000000008FF8FFFFFFFFFFFFFFFFFFFF8FF80000000000
+00000000008FF8FFFFFFFFFFFFFFFFFFFF8FF80000000000
+00000000008FF8FFFFFFFFFFFFFFFFFFFF8FF80000000000
+00000000008FF8FFFFFFFFFFFFFFFFFFFF8FF80000000000
+00000000008FF8FFFFFFFFFFFFFFFFFFFF8FF80000000000
+00000000008FF8FFFFFFFFFFFFFFFFFFFF8FF80000000000
+00000000000888FFFFFFFFFFFFFFFFFFFF88800000000000
+00000000000008FFFFFFFFFFFFFFFFFFFF80000000000000
+00000000000008FFFFFFFFFFFFFFFFFFFF80000000000000
+00000000000008FFFFFFFFFFFFFFFFFFFF80000000000000
+00000000000008FFFFFFFFFFFFFFFFFFFF80000000000000
+00000000000008FFFFFFFFFFFFFFFFFFFF80000000000000
+00000000000004CFFFFFFFFFFFFFFFFFFC40000000000000
+000000488888848CFFFFFFFFFFFFFFFFC848888884000000
+00000CFFFFFFFFC888888888888888888CFFFFFFFFC00000
+00008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF80000
+0000CFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+0008FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFF8000
+0008FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFF8000
+0008FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFF8000
+0008FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFF8000
+0000CFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFC0000
+00008FFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFF80000
+00000CFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFC00000
+000000488887578888888888888888888864688884000000
+000000000000000000000000000000000000000000000000
+}
+
+
+
+
+skinparam rectangle<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam database<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam queue<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam actor<<person>> {
+    StereotypeFontColor #08427B
+    FontColor #08427B
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam person<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam database<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam queue<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam actor<<container>> {
+    StereotypeFontColor #438DD5
+    FontColor #438DD5
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam person<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+
+skinparam rectangle<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam database<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam queue<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam actor<<external_container>> {
+    StereotypeFontColor #B3B3B3
+    FontColor #B3B3B3
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam person<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+
+
+skinparam rectangle<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam database<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam queue<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam actor<<container_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam person<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+}
+skinparam package<<container_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<container_boundary>>StereotypeFontColor transparent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+title "Terraform Module to Provision a Child GCP Project managed with CI\nC4/L2 Architecture Diagram"
+footer "Dmitry Kisler <admin@dkisler.com>"
+
+  rectangle "== Root GCP Project\n<size:12>[System]</size>" <<system_boundary>><<boundary>> as gcp_root  {
+    rectangle "== Terraform SA\n//<size:12>[IAM Service Account]</size>//\n\nSA to provision and own child project" <<container>> as sa_root 
+    rectangle "== Terraform Backend\n//<size:12>[Google Storage Bucket]</size>//\n\nTF state with the child projects" <<container>> as gs_root 
+    rectangle "== AuthN/Z Pool\n//<size:12>[IAM Workload ID Pool+Provider]</size>//\n\nIdentity Pool and Provider to authenticate and authorize the root SA" <<container>> as id_pool_root 
+}
+
+  rectangle "== Child GCP Project\n<size:12>[System]</size>" <<system_boundary>><<boundary>> as gcp_child  {
+  rectangle "== Provisioned by Root SA\n<size:12>[System]</size>" <<system_boundary>><<boundary>> as provisioned_by_root_sa  {
+        rectangle "== Terraform SA\n//<size:12>[IAM Service Account]</size>//\n\nSA to provision and own resources within the child project" <<external_container>> as sa_child 
+        rectangle "== Terraform Backend\n//<size:12>[Google Storage Bucket]</size>//\n\nTF state with resoureces provisioned within the child project" <<external_container>> as gs_child 
+        rectangle "== AuthN/Z Pool\n//<size:12>[IAM Workload ID Pool+Provider]</size>//\n\nIdentity Pool and Provider to authenticate and authorize the child SA" <<external_container>> as id_pool_child 
+        rectangle "== Terraform SA - Root\n//<size:12>[IAM Service Account]</size>//\n\nTransitive ownership" <<container>> as sa_root_child 
+    }
+
+  rectangle "== Provisioned by Child SA\n<size:12>[System]</size>" <<system_boundary>><<boundary>> as child_resource  {
+        rectangle "== Child Project's Resources\n//<size:12>[GCP Resources]</size>//" <<external_container>> as child_resources 
+    }
+
+}
+
+id_pool_root -[hidden]U- sa_root
+gcp_root -[hidden]R- gcp_child
+
+sa_child -[hidden]D- id_pool_child
+sa_child -[hidden]D- sa_root_child
+sa_root_child -[hidden]R- id_pool_child
+
+sa_root -LEFT->> gcp_child : **provisions child project**\n//<size:12>[http/json]</size>//
+sa_root -LEFT->> gs_root : **uploads *.tfstate**\n//<size:12>[https/json]</size>//
+
+sa_child -LEFT->> gs_child : **uploads *.tfstate**\n//<size:12>[https/json]</size>//
+sa_child -DOWN->> child_resource : **provisions child project's resource**\n//<size:12>[http/json]</size>//
+
+hide stereotype
+legend right
+<#00000000,#00000000>|<color:#000000>**Legend**</color> |
+|<#438DD5><color:#3C7FC0> <U+25AF></color> <color:#FFFFFF> container <size:10></size></color> |
+|<#B3B3B3><color:#A6A6A6> <U+25AF></color> <color:#FFFFFF> external_container <size:10></size></color> |
+|<#transparent><color:#444444> <U+25AF></color> <color:#444444> system boundary <size:10>(dashed)</size></color> |
+endlegend
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: DE
+--></g></svg>

@@ -1,0 +1,42 @@
+@startuml module-diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title "Terraform Module to Provision a Child GCP Project managed with CI\nC4/L2 Architecture Diagram"
+footer "Dmitry Kisler <admin@dkisler.com>"
+
+System_Boundary(gcp_root, "Root GCP Project") {
+    Container(sa_root, "Terraform SA", "IAM Service Account", "SA to provision and own child project")
+    Container(gs_root, "Terraform Backend", "Google Storage Bucket", "TF state with the child projects")
+    Container(id_pool_root, "AuthN/Z Pool", "IAM Workload ID Pool+Provider", "Identity Pool and Provider to authenticate and authorize the root SA")
+}
+
+System_Boundary(gcp_child, "Child GCP Project") {
+    System_Boundary(provisioned_by_root_sa, "Provisioned by Root SA") {
+        Container_Ext(sa_child, "Terraform SA", "IAM Service Account", "SA to provision and own resources within the child project")
+        Container_Ext(gs_child, "Terraform Backend", "Google Storage Bucket", "TF state with resoureces provisioned within the child project")
+        Container_Ext(id_pool_child, "AuthN/Z Pool", "IAM Workload ID Pool+Provider", "Identity Pool and Provider to authenticate and authorize the child SA")
+        Container(sa_root_child, "Terraform SA - Root", "IAM Service Account", "Transitive ownership")
+    }
+
+    System_Boundary(child_resource, "Provisioned by Child SA") {
+        Container_Ext(child_resources, "Child Project's Resources", "GCP Resources")
+    }
+
+}
+
+Lay_U(id_pool_root, sa_root)
+Lay_R(gcp_root, gcp_child)
+
+Lay_D(sa_child, id_pool_child)
+Lay_D(sa_child, sa_root_child)
+Lay_R(sa_root_child, id_pool_child)
+
+Rel_L(sa_root, gcp_child, "provisions child project", "http/json")
+Rel_L(sa_root, gs_root, "uploads *.tfstate", "https/json")
+
+Rel_L(sa_child, gs_child, "uploads *.tfstate", "https/json")
+Rel_D(sa_child, child_resource, "provisions child project's resource", "http/json")
+
+SHOW_LEGEND()
+
+@enduml
