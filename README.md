@@ -14,7 +14,7 @@ The module supports the following CI:
 
 ## Architecture Diagram
 
-![diagram](module-diagram.svg)
+![diagram](https://raw.githubusercontent.com/kislerdm/terraform-google-child-project/master/module-diagram.svg)
 
 ## Prerequisites
 
