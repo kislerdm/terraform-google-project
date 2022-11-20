@@ -1,13 +1,15 @@
 # Terraform module to provision a child GCP project managed with CI
 
-The module provisions a GCP project and assigns a billing account to it. 
+The module provisions a GCP project and assigns a billing account to it.
 
 The following resources are also provisioned in the newly created account:
+
 - the service account to provision project specific resources using terraform;
 - the bucket to be used as the terraform backend to keep state of project specific resources;
 - the workload identity pool to authenticate and authorise the created service account for CI jobs.
 
 The module supports the following CI:
+
 - GitHub Actions.
 
 ## Architecture Diagram
@@ -54,7 +56,7 @@ Add the configuration to the [main.tf](main.tf) of the terraform project:
 
 ```terraform
 module "{{.projectName}}" {
-  source          = ""
+  source          = "kislerdm/child-project/google"
   root_project    = "{{.rootProjectID}}"
   root_sa_email   = "{{.serviceAccountEmail}}"
   project_id      = "{{.projectName}}"
