@@ -22,13 +22,12 @@ The module supports the following CI:
 2. Activated [billing](https://console.cloud.google.com/billing).
 3. The root GCP project -> `{{.rootProjectID}}`.
 4. The service account (SA) to be assumed to provision child projects using terraform -> `{{.serviceAccountEmail}}`.
-5. The following permissions attached to the SA:
-    - roles/owner
-    - roles/iam.roleAdmin
-    - roles/iam.serviceAccountUser
-    - roles/serviceusage.serviceUsageAdmin
+5. The following roles attached to the SA on the _organisation level_:
     - roles/axt.admin
-    - roles/billing.projectManager
+    - roles/billing.user
+    - roles/resourcemanager.projectCreator
+    - roles/resourcemanager.projectIamAdmin
+    - roles/resourcemanager.projectDeleter
 6. Follow [the steps](https://github.com/google-github-actions/auth#setting-up-workload-identity-federation) to setup
    workload ID federation
 7. Configure the GitHub action authN/Z step:
