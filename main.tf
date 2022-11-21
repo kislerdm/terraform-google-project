@@ -3,7 +3,6 @@ terraform {
     google = {
       source  = "hashicorp/google"
       version = "~> 4.41.0"
-
     }
   }
 }
@@ -86,7 +85,8 @@ resource "google_iam_workload_identity_pool" "this" {
   display_name              = "Github Access Pool"
   description               = "Pool to authorize terraform SA"
   disabled                  = false
-  depends_on                = [google_project.this]
+
+  depends_on = [google_project_service.this]
 }
 
 resource "google_iam_workload_identity_pool_provider" "this" {
@@ -109,6 +109,8 @@ resource "google_iam_workload_identity_pool_provider" "this" {
   }
 
   disabled = true
+
+  depends_on = [google_project_service.this]
 }
 
 resource "google_service_account_iam_binding" "this" {
